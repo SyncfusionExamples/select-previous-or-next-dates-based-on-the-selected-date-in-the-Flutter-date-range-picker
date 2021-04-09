@@ -20,13 +20,7 @@ class RangeSelectionInPicker extends StatefulWidget {
 }
 
 class RangeSelectionInPickerState extends State<RangeSelectionInPicker> {
-  DateRangePickerController _controller;
-
-  @override
-  void initState() {
-    _controller = DateRangePickerController();
-    super.initState();
-  }
+  final DateRangePickerController _controller = DateRangePickerController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,23 +38,24 @@ class RangeSelectionInPickerState extends State<RangeSelectionInPicker> {
                   onSelectionChanged: selectionChanged))
         ],
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-    List<PickerDateRange> dateRanges, ranges;
-    dateRanges = (args.value as List<PickerDateRange>);
-    DateTime date = dateRanges[dateRanges.length - 1].startDate;
-    if (_controller.selectedRanges != null) {
-    _controller.selectedRanges.clear();
-    ranges = _controller.selectedRanges;
-    ranges.addAll(<PickerDateRange>[
-      PickerDateRange(
-          date.add(Duration(days: -3)), date.add(Duration(days: -1))),
-      PickerDateRange(date.add(Duration(days: 1)), date.add(Duration(days: 3)))
-    ]);
-    _controller.selectedRanges = ranges;
+    final List<PickerDateRange> dateRanges =
+        (args.value as List<PickerDateRange>);
+    final DateTime? date = dateRanges.isNotEmpty
+        ? dateRanges[dateRanges.length - 1].startDate!
+        : null;
+    if (date != null &&
+        _controller.selectedRanges != null &&
+        dateRanges[dateRanges.length - 1].endDate == null) {
+      _controller.selectedRanges = <PickerDateRange>[
+        PickerDateRange(
+            date.add(Duration(days: -3)), date.add(Duration(days: -1))),
+        PickerDateRange(
+            date.add(Duration(days: 1)), date.add(Duration(days: 3)))
+      ];
     }
   }
 }
