@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-void main() => runApp(RangeSelection());
+void main() => runApp(const RangeSelection());
 
 class RangeSelection extends StatelessWidget {
+  const RangeSelection({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: RangeSelectionInPicker(),
     );
@@ -15,6 +17,8 @@ class RangeSelection extends StatelessWidget {
 }
 
 class RangeSelectionInPicker extends StatefulWidget {
+  const RangeSelectionInPicker({super.key});
+
   @override
   RangeSelectionInPickerState createState() => RangeSelectionInPickerState();
 }
@@ -32,7 +36,7 @@ class RangeSelectionInPickerState extends State<RangeSelectionInPicker> {
               child: SfDateRangePicker(
                   view: DateRangePickerView.month,
                   controller: _controller,
-                  monthViewSettings: DateRangePickerMonthViewSettings(
+                  monthViewSettings: const DateRangePickerMonthViewSettings(
                       enableSwipeSelection: false),
                   selectionMode: DateRangePickerSelectionMode.multiRange,
                   onSelectionChanged: selectionChanged))
@@ -43,7 +47,7 @@ class RangeSelectionInPickerState extends State<RangeSelectionInPicker> {
 
   void selectionChanged(DateRangePickerSelectionChangedArgs args) {
     final List<PickerDateRange> dateRanges =
-        (args.value as List<PickerDateRange>);
+    (args.value as List<PickerDateRange>);
     final DateTime? date = dateRanges.isNotEmpty
         ? dateRanges[dateRanges.length - 1].startDate!
         : null;
@@ -52,9 +56,9 @@ class RangeSelectionInPickerState extends State<RangeSelectionInPicker> {
         dateRanges[dateRanges.length - 1].endDate == null) {
       _controller.selectedRanges = <PickerDateRange>[
         PickerDateRange(
-            date.add(Duration(days: -3)), date.add(Duration(days: -1))),
+            date.add(const Duration(days: -3)), date.add(const Duration(days: -1))),
         PickerDateRange(
-            date.add(Duration(days: 1)), date.add(Duration(days: 3)))
+            date.add(const Duration(days: 1)), date.add(const Duration(days: 3)))
       ];
     }
   }
